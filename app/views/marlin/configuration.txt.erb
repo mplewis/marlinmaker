@@ -2,13 +2,13 @@
 #define CONFIGURATION_H
 #define CONFIGURATION_H_VERSION 010109
 
-<%# Board selection %>
-<%= defval :board_name %>
+// Board selection
+<%= defcontents :board_name %>
 
-<%# EZOUT: Filament Runout sensor %>
+// EZOUT: Filament Runout sensor
 <%= defif :ezout_enable %>
 
-<%# EZABL: Auto Bed Leveling hardware %>
+// EZABL: Auto Bed Leveling hardware
 <%= defvalif :ezabl_probe_mount %>
 <%= defval :ezabl_points, :ezabl_probe_edge %>
 <%= defif :ezabl_outside_grid_compensation,
@@ -17,59 +17,59 @@
           :probing_motors_off,
           :heaters_on_during_probing %>
 
-<%# Custom probe settings %>
+// Custom probe settings
 <%= defvalif :x_probe_offset_from_extruder,
              :y_probe_offset_from_extruder %>
 
-<%# TH3D extras %>
+// TH3D extras
 
-<%# Custom extruder steps %>
+// Custom extruder steps
 <%= defif :custom_esteps %>
-<%= defval custom_esteps_value %>
+<%= defval :custom_esteps_value %>
 
-<%# Titan extruder support %>
+// Titan extruder support
 <%= defif :titan_extruder %>
 <%= defval :titan_extruder_steps %>
 
-<%# Custom extruder steps %>
+// Custom extruder steps
 <%= defval :dual_hotend_x_distance %>
 
-<%# Thermistor settings %>
-<%= defif :v6_hotend,
-          :th3_d_hotend_thermistor,
-          :th3_d_bed_thermistor,
-          :keenovo_tempsensor %>
+// Thermistor settings
+<%= defcontentsif :thermistor %>
 
-<%# Bed settings %>
+// Bed settings
 <%= defif :ac_bed,
           :pidbed_disable %>
 
-<%# Misc settings %>
+// Misc settings
 <%= defif :fan_fix %>
-<%= defval :user_printer_name %>
+<%= defvalif :user_printer_name %>
 
-<%# Boot screen options %>
-<%= defif :tm3d_boot,
-          :ender_boot,
-          :disable_boot %>
+// Boot screen options
+<%= defcontentsif :boot_screen %>
 
-<%# Advanced features %>
+// Advanced features
 
-<%# Custom XY home offsets %>
+// Manual mesh leveling
+<%= defif :manual_mesh_leveling %>
+
+// Power loss recovery
+<%= defif :power_loss_recovery %>
+
+// Custom XY home offsets
 <%= defif :home_adjust %>
 <%= defval :x_home_location,
            :y_home_location %>
 
-<%# Linear advance pressure control %>
+// Linear advance pressure control
 <%= defif :linear_advance %>
 <%= defval :linear_advance_k %>
 
-<%# New motion control options %>
+// New motion control options
 <%= defif :new_jerk_control,
           :new_acceleration_control %>
 
-
-<%# Language support %>
+// Language support
 <%= defval :lcd_language %>
 
 #include "Configuration_backend.h"
