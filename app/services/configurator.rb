@@ -38,7 +38,7 @@ class Configurator
 
   INCLUSION = {
     board_name: %w(CR10 CR10_MINI CR10_S4 CR10_S5),
-    thermistor: %w(v6_hotend th3_d_hotend_thermistor th3_d_bed_thermistor keenovo_tempsensor),
+    thermistor: %w(v6_hotend th3d_hotend_thermistor th3d_bed_thermistor keenovo_tempsensor),
     boot_screen: %w(tm3d_boot ender_boot disable_boot)
   }
 
