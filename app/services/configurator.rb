@@ -10,11 +10,11 @@ class Configurator
     y_home_location: -10,
     linear_advance_k: 0,
     lcd_language: 'en',
-  }
+  }.freeze
 
   MANDATORY = %i(
     board_name
-  )
+  ).freeze
 
   BOOLEAN = %i(
     ezout_enable
@@ -34,7 +34,7 @@ class Configurator
     linear_advance
     new_jerk_control
     new_acceleration_control
-  )
+  ).freeze
 
   INCLUSION = {
     board_name: %w(CR10 CR10_MINI CR10_S4 CR10_S5),
@@ -42,17 +42,56 @@ class Configurator
     boot_screen: %w(tm3d_boot ender_boot disable_boot)
   }
 
-  class << self
-    def generate(params)
-      data = DEFAULTS.merge params
-      render 'marlin/configuration.txt', assigns: { params: data }
+  def self.generate(params)
+    raise unless valid?(params)
+    new(params).generate
+  end
+
+  def self.errors(params)
+    new(params).errors
+  end
+
+  def initialize(params)
+    @params = params
+  end
+  private_class_method :new
+
+  def generate
+    render 'marlin/configuration.txt', assigns: { params: data }
+  end
+
+  def errors
+    errors = Hash.new { |h, k| h[k] = [] }
+
+    MANDATORY.each do |key|
+      next if data.keys.include? key
+      errors[key] << "Missing mandatory key #{key.inspect}"
     end
 
-    private
-
-    def render(*args, **kwargs)
-      ApplicationController.renderer.render *args, **kwargs
+    BOOLEAN.each do |key|
+      value = data[key]
+      next unless value
+      next if [true, false].include? value
+      errors[key] << "Value for key #{key.inspect} must be true or false, got #{value.inspect}"
     end
+
+    INCLUSION.each do |key, expected_values|
+      value = data[key]
+      next unless value
+      next if expected_values.include? value
+      errors[key] << "Value for key #{key.inspect} must be one of #{expected_values.inspect}, got #{value.inspect}"
+    end
+
+    errors
+  end
+
+  private
+
+  def data
+    @data ||= DEFAULTS.merge(@params).compact
+  end
+
+  def render(*args, **kwargs)
+    ApplicationController.renderer.render *args, **kwargs
   end
 end
-
