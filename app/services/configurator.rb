@@ -36,11 +36,27 @@ class Configurator
     new_acceleration_control
   ).freeze
 
+  INTEGER = %i(
+    ezabl_points
+    ezable_probe_edge
+    x_probe_offset_from_extruder
+    y_probe_offset_from_extruder
+    custom_esteps_value
+    titan_extruder_steps
+    x_home_location
+    y_home_location
+    linear_advance_k
+  ).freeze
+
+  FLOAT = %i(
+    dual_hotend_x_distance
+  ).freeze
+
   INCLUSION = {
     board_name: %w(CR10 CR10_MINI CR10_S4 CR10_S5),
     thermistor: %w(v6_hotend th3d_hotend_thermistor th3d_bed_thermistor keenovo_tempsensor),
     boot_screen: %w(tm3d_boot ender_boot disable_boot)
-  }
+  }.freeze
 
   def self.generate(params)
     raise unless valid?(params)
@@ -73,6 +89,18 @@ class Configurator
       next unless value
       next if [true, false].include? value
       errors[key] << "Value for key #{key.inspect} must be true or false, got #{value.inspect}"
+    end
+
+    INTEGER.each do |key|
+      value = data[key]
+      next if value == value.try(:to_i)
+      errors[key] << "Value for key #{key.inspect} must be an integer, got #{value.inspect}"
+    end
+
+    FLOAT.each do |key|
+      value = data[key]
+      next if value == value.try(:to_f) || value == value.try(:to_i)
+      errors[key] << "Value for key #{key.inspect} must be an integer, got #{value.inspect}"
     end
 
     INCLUSION.each do |key, expected_values|

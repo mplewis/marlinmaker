@@ -1,17 +1,18 @@
 require 'rails_helper'
 
 describe Configurator do
+  let(:valid_params) {{
+    board_name: 'CR10', # defcontents
+    thermistor: 'v6_hotend', # defcontentsif
+    lcd_language: 'fr', # defval
+    ezabl_points: 10, # defval
+    heaters_on_during_probing: true, # defif
+    ezabl_outside_grid_compensation: false # defif, default: true
+  }}
+
   describe '.generate' do
-    subject { described_class.generate params }
+    subject { described_class.generate valid_params }
     let(:lines) { subject.split "\n" }
-    let(:params) {{
-      board_name: 'CR10', # defcontents
-      thermistor: 'v6_hotend', # defcontentsif
-      lcd_language: 'fr', # defval
-      ezabl_points: 10, # defval
-      heaters_on_during_probing: true, # defif
-      ezabl_outside_grid_compensation: false # defif, default: true
-    }}
 
     it 'includes the correct items' do
       expect(subject).to include(
@@ -27,21 +28,16 @@ describe Configurator do
   end
 
   context 'validations' do
-    let(:valid_params) {{
-      board_name: 'CR10', # defcontents
-      thermistor: 'v6_hotend', # defcontentsif
-      lcd_language: 'fr', # defval
-      ezabl_points: 10, # defval
-      heaters_on_during_probing: true, # defif
-      ezabl_outside_grid_compensation: false # defif, default: true
-    }}
-
     let(:invalid_params) {{
       # no mandatory board name
       # non-boolean flag
       ezout_enable: 'no_thanks',
       # invalid thermistor type
       thermistor: 'new_fangled_heaty_boi',
+
+      # incorrect types
+      ezabl_points: 12.5,
+      dual_hotend_x_distance: '9',
 
       # some stuff that's actually valid
       lcd_language: 'fr',
@@ -60,8 +56,9 @@ describe Configurator do
         let(:params) { invalid_params }
         it { is_expected.to eql(
           board_name: ["Missing mandatory key :board_name"],
-          ezout_enable:
-            ['Value for key :ezout_enable must be true or false, got "no_thanks"'],
+          ezout_enable: ['Value for key :ezout_enable must be true or false, got "no_thanks"'],
+          ezabl_points: ["Value for key :ezabl_points must be an integer, got 12.5"],
+          dual_hotend_x_distance: ['Value for key :dual_hotend_x_distance must be an integer, got "9"'],
           thermistor: [
             <<~MSG.squish
               Value for key :thermistor must be one of
