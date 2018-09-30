@@ -7,6 +7,10 @@ module ConfiguratorHelper
     syms.map { |sym| defval1 sym }.join "\n"
   end
 
+  def defvalraw(*syms)
+    syms.map { |sym| defvalraw1 sym }.join "\n"
+  end
+
   def defvalif(*syms)
     syms.map { |sym| defvalif1 sym }.compact.join "\n"
   end
@@ -31,6 +35,10 @@ module ConfiguratorHelper
 
   def defval1(sym)
     "#define #{up sym} #{@params[sym].inspect}"
+  end
+
+  def defvalraw1(sym)
+    "#define #{up sym} #{@params[sym]}"
   end
 
   def defvalif1(sym)
