@@ -59,7 +59,8 @@ class Configurator
   }.freeze
 
   def self.generate(params)
-    raise unless valid?(params)
+    discovered_errors = errors(params)
+    raise InvalidParamsError, "Invalid params: #{discovered_errors}" unless discovered_errors.empty?
     new(params).generate
   end
 
@@ -122,4 +123,6 @@ class Configurator
   def render(*args, **kwargs)
     ApplicationController.renderer.render *args, **kwargs
   end
+
+  class InvalidParamsError < StandardError; end
 end
