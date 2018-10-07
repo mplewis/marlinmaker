@@ -1,3 +1,48 @@
+ezabl_points:
+  type: integer
+  desc: EZABL points per edge
+  default: 4
+
+ezabl_probe_edge:
+  type: integer
+  desc: EZABL probe-in-bed distance (mm)
+  default: 15
+
+ezabl_outside_grid_compensation:
+  type: boolean
+  desc: EZABL compensate tilt outside probe area
+  default: true
+
+custom_esteps_value:
+  type: integer
+  desc: Extruder steps (E-steps)
+  default: 999
+
+titan_extruder_steps:
+  type: integer
+  desc: Extruder steps for E3D or TH3D Titan Extruder
+  default: 463
+
+dual_hotend_x_distance:
+  type: float
+  desc: Distance between dual hotend tips (mm)
+  default: 18.0
+
+x_home_location:
+  type: integer
+  desc: Custom X home offset
+  default: -10
+
+y_home_location:
+  type: integer
+  desc: Custom Y home offset
+  default: -10
+
+linear_advance_k:
+  type: float
+  desc: Linear Advance K value
+  default: 0
+
 board_name:
   type: select
   desc: Printer Board
@@ -7,16 +52,6 @@ board_name:
     CR10_MINI: CR-10 Mini
     CR10_S4: CR-10 S4
     CR10_S5: CR-10 S5
-
-ezabl_points:
-  type: number
-  desc: EZABL Points
-  default: 5
-
-ezabl_outside_grid_compensation:
-  type: boolean
-  desc: "EZABL: Outside Grid Compensation"
-  default: false
 
 lcd_language:
   type: select
