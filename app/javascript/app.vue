@@ -2,25 +2,26 @@
 <div class="container my-4">
   <div class="row">
     <div class="col-sm">
-      <b-form-select v-model="board_name" :options="settings.board_name.options" class="mb-3" />
-      <b-form-input v-model="ezabl_points" placeholder="EZABL Points" type="number" class="mb-3" />
-      <b-form-checkbox v-model="ezabl_outside_grid_compensation" class="mb-3">EZABL: Outside Grid Compensation</b-form-checkbox>
-      <b-form-select v-model="lcd_language" :options="settings.lcd_language.options" class="mb-3" />
+      <div v-for="(spec, key) in options" :key="key" class="mb-3">
+        <b-form-checkbox v-if="spec.type === 'boolean'" v-model="selected[key]">{{spec.desc}}</b-form-checkbox>
+        <b-form-input v-if="spec.type === 'number'" v-model="selected[key]" type="number" :placeholder="spec.desc" />
+        <b-form-select v-if="spec.type === 'select'" v-model="selected[key]" :options="spec.options" />
+      </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-const settings = require('./settings.yml')
+import options from './options.yml'
+import { map } from 'ramda'
+
+const fetchDefaults = map(spec => spec.default)
 
 export default {
   data: () => ({
-    settings,
-    board_name: null,
-    ezabl_points: 5,
-    ezabl_outside_grid_compensation: true,
-    lcd_language: 'en',
+    options,
+    selected: fetchDefaults(options)
   })
 }
 </script>

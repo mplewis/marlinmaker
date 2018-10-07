@@ -1,7 +1,8 @@
 board_name:
   type: select
+  desc: Printer Board
+  default: CR10
   options:
-    null: Printer Board
     CR10: CR-10
     CR10_MINI: CR-10 Mini
     CR10_S4: CR-10 S4
@@ -9,12 +10,18 @@ board_name:
 
 ezabl_points:
   type: number
+  desc: EZABL Points
+  default: 5
 
 ezabl_outside_grid_compensation:
   type: boolean
+  desc: "EZABL: Outside Grid Compensation"
+  default: false
 
 lcd_language:
   type: select
+  desc: LCD Language
+  default: en
   options:
     en: English
     an: Aragonese
