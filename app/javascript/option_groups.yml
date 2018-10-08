@@ -1,6 +1,7 @@
 Core:
   desc: >
     Basic setup for TH3D Unified Firmware, required for all builds
+  startOpen: true
   options:
     - board_name
 
