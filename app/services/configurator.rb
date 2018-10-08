@@ -1,62 +1,17 @@
+# frozen_string_literal: true
+
 class Configurator
-  DEFAULTS = {
-    ezabl_points: 4,
-    ezabl_probe_edge: 15,
-    ezabl_outside_grid_compensation: true,
-    custom_esteps_value: 999,
-    titan_extruder_steps: 463,
-    dual_hotend_x_distance: 18.0,
-    x_home_location: -10,
-    y_home_location: -10,
-    linear_advance_k: 0,
-    lcd_language: 'en',
-  }.freeze
+  OPTIONS_PATH = Rails.root.join(*%w(app javascript options.yml)).freeze
+  OPTIONS = YAML.load_file(OPTIONS_PATH).deep_symbolize_keys.freeze
 
-  MANDATORY = %i(
-    board_name
-  ).freeze
+  MANDATORY = OPTIONS.select { |k, v| v[:mandatory] }.map(&:first).freeze
+  BOOLEAN = OPTIONS.select { |k, v| v[:type] == 'boolean' }.map(&:first).freeze
+  INTEGER = OPTIONS.select { |k, v| v[:type] == 'integer' }.map(&:first).freeze
+  FLOAT = OPTIONS.select { |k, v| v[:type] == 'float' }.map(&:first).freeze
 
-  BOOLEAN = %i(
-    ezout_enable
-    ezabl_outside_grid_compensation
-    ezabl_fastprobe
-    babystep_offset
-    probing_motors_off
-    heaters_on_during_probing
-    custom_esteps
-    titan_extruder
-    ac_bed
-    pidbed_disable
-    fan_fix
-    manual_mesh_leveling
-    power_loss_recovery
-    home_adjust
-    linear_advance
-    new_jerk_control
-    new_acceleration_control
-  ).freeze
-
-  INTEGER = %i(
-    ezabl_points
-    ezable_probe_edge
-    x_probe_offset_from_extruder
-    y_probe_offset_from_extruder
-    custom_esteps_value
-    titan_extruder_steps
-    x_home_location
-    y_home_location
-    linear_advance_k
-  ).freeze
-
-  FLOAT = %i(
-    dual_hotend_x_distance
-  ).freeze
-
-  INCLUSION = {
-    board_name: %w(CR10 CR10_MINI CR10_S4 CR10_S5),
-    thermistor: %w(v6_hotend th3d_hotend_thermistor th3d_bed_thermistor keenovo_tempsensor),
-    boot_screen: %w(tm3d_boot ender_boot disable_boot)
-  }.freeze
+  INCLUSION = OPTIONS.select { |k, v| v[:options] }
+                     .map { |k, v| [k, v[:options].map(&:first).map { |v| v && v.to_s }] }
+                     .to_h.freeze
 
   def self.generate(params)
     discovered_errors = errors(params)
@@ -101,7 +56,7 @@ class Configurator
     FLOAT.each do |key|
       value = data[key]
       next if value == value.try(:to_f) || value == value.try(:to_i)
-      errors[key] << "Value for key #{key.inspect} must be an integer, got #{value.inspect}"
+      errors[key] << "Value for key #{key.inspect} must be a float, got #{value.inspect}"
     end
 
     INCLUSION.each do |key, expected_values|
@@ -117,7 +72,7 @@ class Configurator
   private
 
   def data
-    @data ||= DEFAULTS.merge(@params).compact
+    @params
   end
 
   def render(*args, **kwargs)

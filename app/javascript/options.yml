@@ -1,12 +1,19 @@
 board_name:
   type: select
   desc: Printer Board
+  mandatory: true
   default: CR10
   options:
     CR10: CR-10
     CR10_MINI: CR-10 Mini
     CR10_S4: CR-10 S4
     CR10_S5: CR-10 S5
+
+ezout_enable:
+  type: boolean
+  desc: Enable EZOut V1/V2 filament runout sensor
+  enableVerb: Enable EZOut support
+  default: false
 
 ezabl_probe_mount:
   type: select
@@ -26,7 +33,7 @@ ezabl_probe_mount:
 ezabl_points:
   type: integer
   desc: EZABL points per edge (use odd numbers)
-  default: 4
+  default: 5
 
 ezabl_probe_edge:
   type: integer

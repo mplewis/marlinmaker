@@ -4,12 +4,13 @@ Core:
   startOpen: true
   options:
     - board_name
+    - ezout_enable
+    - ezabl_probe_mount
 
 EZABL:
   desc: >
     Support for the TH3D EZ Auto Bed Leveling probe
   options:
-    - ezabl_probe_mount
     - ezabl_points
     - ezabl_probe_edge
     - ezabl_fastprobe

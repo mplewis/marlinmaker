@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Configurator do
   let(:valid_params) {{
     board_name: 'CR10', # defcontents
-    thermistor: 'v6_hotend', # defcontentsif
+    thermistor: 'V6_HOTEND', # defcontentsif
     lcd_language: 'fr', # defval
     ezabl_points: 10, # defval
     heaters_on_during_probing: true, # defif
@@ -18,7 +18,7 @@ describe Configurator do
       expect(subject).to include(
         '#define CR10',
         '#define V6_HOTEND',
-        '#define LCD_LANGUAGE "fr"',
+        '#define LCD_LANGUAGE fr',
         '#define EZABL_POINTS 10',
         '#define HEATERS_ON_DURING_PROBING',
       )
@@ -33,7 +33,7 @@ describe Configurator do
       # non-boolean flag
       ezout_enable: 'no_thanks',
       # invalid thermistor type
-      thermistor: 'new_fangled_heaty_boi',
+      thermistor: 'NEW_FANGLED_HEATY_BOI',
 
       # incorrect types
       ezabl_points: 12.5,
@@ -58,12 +58,12 @@ describe Configurator do
           board_name: ["Missing mandatory key :board_name"],
           ezout_enable: ['Value for key :ezout_enable must be true or false, got "no_thanks"'],
           ezabl_points: ["Value for key :ezabl_points must be an integer, got 12.5"],
-          dual_hotend_x_distance: ['Value for key :dual_hotend_x_distance must be an integer, got "9"'],
+          dual_hotend_x_distance: ['Value for key :dual_hotend_x_distance must be a float, got "9"'],
           thermistor: [
             <<~MSG.squish
               Value for key :thermistor must be one of
-              ["v6_hotend", "th3d_hotend_thermistor", "th3d_bed_thermistor", "keenovo_tempsensor"],
-              got "new_fangled_heaty_boi"
+              [nil, "V6_HOTEND", "TH3D_HOTEND_THERMISTOR", "TH3D_BED_THERMISTOR", "KEENOVO_TEMPSENSOR"],
+              got "NEW_FANGLED_HEATY_BOI"
             MSG
           ],
         )}
