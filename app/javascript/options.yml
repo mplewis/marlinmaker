@@ -117,8 +117,10 @@ fan_fix:
   enableVerb: Enable fix
   default: false
 
-# // Use your own printer name
-# //#define USER_PRINTER_NAME "CHANGE ME"
+user_printer_name:
+  type: string
+  desc: Custom printer name
+  default: null
 
 boot_screen:
   type: select
@@ -129,8 +131,6 @@ boot_screen:
     TM3D_BOOT: TinyMachines
     ENDER_BOOT: Ender
     DISABLE_BOOT: Disable boot screen
-
-# // ADVANCED FEATURES (NOT SUPPORTED BY TH3D)  ------
 
 manual_mesh_leveling:
   type: boolean
@@ -160,9 +160,15 @@ y_home_location:
   desc: Custom Y home offset
   default: -10
 
+linear_advance:
+  type: boolean
+  desc: Linear advance
+  enableVerb: Enable linear advance
+  default: false
+
 linear_advance_k:
   type: float
-  desc: Linear Advance K value
+  desc: Linear advance K value
   default: 0
 
 new_jerk_control:
@@ -182,7 +188,6 @@ lcd_language:
   desc: LCD Language
   default: en
   options:
-    en: English
     an: Aragonese
     bg: Bulgarian
     ca: Catalan
@@ -192,6 +197,7 @@ lcd_language:
     de: German
     el: Greek
     el-gr: Greek (Greece)
+    en: English
     es: Spanish
     eu: Basque-Euskera
     fi: Finnish

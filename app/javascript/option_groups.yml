@@ -19,3 +19,38 @@ EZABL:
     - ezabl_outside_grid_compensation
     - x_probe_offset_from_extruder
     - y_probe_offset_from_extruder
+
+Extruder:
+  options:
+    - custom_esteps_value
+    - titan_extruder_steps
+
+Thermistor:
+  options:
+    - thermistor
+
+Heated Bed:
+  options:
+    - ac_bed
+    - pidbed_disable
+
+Miscellaneous:
+  options:
+    - fan_fix
+    - user_printer_name
+    - boot_screen
+
+Advanced:
+  desc: >
+    These options are not supported by TH3D. Use at your own risk.
+  options:
+    - manual_mesh_leveling
+    - power_loss_recovery
+    - home_adjust
+    - x_home_location
+    - y_home_location
+    - linear_advance
+    - linear_advance_k
+    - new_jerk_control
+    - new_acceleration_control
+    - lcd_language
