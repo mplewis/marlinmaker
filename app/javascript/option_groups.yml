@@ -1,0 +1,20 @@
+Core:
+  desc: >
+    Basic setup for TH3D Unified Firmware, required for all builds
+  options:
+    - board_name
+
+EZABL:
+  desc: >
+    Support for the TH3D EZ Auto Bed Leveling probe
+  options:
+    - ezabl_probe_mount
+    - ezabl_points
+    - ezabl_probe_edge
+    - ezabl_fastprobe
+    - babystep_offset
+    - probing_motors_off
+    - heaters_on_during_probing
+    - ezabl_outside_grid_compensation
+    - x_probe_offset_from_extruder
+    - y_probe_offset_from_extruder

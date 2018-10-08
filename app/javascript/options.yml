@@ -36,26 +36,31 @@ ezabl_probe_edge:
 ezabl_fastprobe:
   type: boolean
   desc: Use Fast Probe to speed up probing
+  enableVerb: Use Fast Probe
   default: false
 
 babystep_offset:
   type: boolean
   desc: Allow babystepping to modify Z offset
+  enableVerb: Allow
   default: false
 
 probing_motors_off:
   type: boolean
   desc: Disable XYE motors during probing
+  enableVerb: Disable
   default: false
 
 heaters_on_during_probing:
   type: boolean
   desc: Keep heaters on during probing
+  enableVerb: Keep heaters on
   default: false
 
 ezabl_outside_grid_compensation:
   type: boolean
   desc: EZABL compensate tilt outside probe area
+  enableVerb: Compensate
   default: true
 
 x_probe_offset_from_extruder:
@@ -97,16 +102,19 @@ thermistor:
 ac_bed:
   type: boolean
   desc: Disable heated bed (for use with AC bed and Keenovo standalone controller)
+  enableVerb: Disable
   default: false
 
 pidbed_disable:
   type: boolean
   desc: Use bang-bang heated bed control, not PID
+  enableVerb: Use bang-bang
   default: false
 
 fan_fix:
   type: boolean
   desc: Fix 5015 fan whine under 100% speed
+  enableVerb: Enable fix
   default: false
 
 # // Use your own printer name
@@ -127,16 +135,19 @@ boot_screen:
 manual_mesh_leveling:
   type: boolean
   desc: Manual mesh leveling (without probe)
+  enableVerb: Enable
   default: false
 
 power_loss_recovery:
   type: boolean
   desc: Power loss recovery (save layer state to SD card)
+  enableVerb: Enable
   default: false
 
 home_adjust:
   type: boolean
   desc: Adjust XY home offsets from defaults
+  enableVerb: Enable custom offsets
   default: false
 
 x_home_location:
@@ -157,11 +168,13 @@ linear_advance_k:
 new_jerk_control:
   type: boolean
   desc: New motion control for jerk
+  enableVerb: Enable new jerk
   default: false
 
 new_acceleration_control:
   type: boolean
   desc: New motion control for acceleration
+  enableVerb: Enable new acceleration
   default: false
 
 lcd_language:
