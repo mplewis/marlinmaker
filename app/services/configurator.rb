@@ -69,7 +69,7 @@ class Configurator
   end
 
   def initialize(params)
-    @params = params
+    @params = params.to_h.symbolize_keys
   end
   private_class_method :new
 
